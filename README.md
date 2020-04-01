@@ -6,7 +6,8 @@ API's data will be updated daily.
 ## Features
 
 1) ~~Show latest COVID-19 data of respective country, including case confirmed, recovered and deaths.~~
-2) Show graph of 5 recent days data from respective country.
+2) ~~Mobile support~~
+3) Show graph of 5 recent days data from respective country.
 
 ## Screenshot
 
@@ -16,8 +17,11 @@ API's data will be updated daily.
 ### Contact 
 ![Contact](https://raw.githubusercontent.com/arufian/LWC-Component-COVID19/master/screenshots/contact.png)
 
+### Mobile
+![Data Not Found](/screenshots/mobile.png)
+
 ### Data not found 
-![Data Not Found](https://raw.githubusercontent.com/arufian/LWC-Component-COVID19/master/screenshots/notfound.png)
+![Data Not Found](/screenshots/notfound.png)
 
 ## How to use
 
