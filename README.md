@@ -1,7 +1,12 @@
 # LWC-Component-COVID19
 A LWC Component that can be embedded into Account or Contact record page, which will show all COVID-19 statistics of Account's country or Contact's country. 
 
-COVID-19 statistic data will be updated daily.
+API's data will be updated daily.
+
+## Features
+
+1) ~~Show latest COVID-19 data of respective country, including case confirmed, recovered and deaths.~~
+2) Show graph of 5 recent days data from respective country.
 
 ## Screenshot
 
