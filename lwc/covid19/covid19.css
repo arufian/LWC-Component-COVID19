@@ -1,0 +1,23 @@
+.container {
+  text-align: center;
+}
+.sub-container {
+  margin-bottom: .75rem;
+}
+.main-number {
+  font-size: 54px;
+  color: orange;
+  font-weight: bold;
+}
+.sub-number {
+  font-size: 35px;
+}
+.green {
+  color: #00a700;
+}
+.red {
+  color: #a20e0e;
+}
+.sub-text {
+  font-size: 18px;
+}

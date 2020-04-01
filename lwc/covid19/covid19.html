@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title={title} icon-name="custom:custom94" class="">
+      <div class="slds-card__body_inner">
+        <template if:true={isLoading}>
+          <div role="status" class="slds-spinner slds-spinner_small">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+          </div>
+        </template>
+        <template if:false={isLoading}>
+          <template if:true={error}>
+            <div class="slds-illustration slds-illustration_medium" aria-hidden="true">
+              <img src="/img/chatter/OpenRoad.svg" class="slds-illustration__svg" alt=""/>
+              <div class="slds-text-color_weak">
+                <h3 class="slds-text-heading_medium slds-m-top_medium">COVID-19 data not found</h3>
+                <p class="slds-text-body_regular slds-p-top_small slds-m-bottom_none">
+                  {errorMessage}
+                </p>
+              </div>
+            </div>
+          </template>
+          <template if:false={error}>
+            <lightning-layout multiple-rows="true" class="container">
+              <lightning-layout-item class="sub-container" flexibility="grow" size="12">
+                <lightning-formatted-number class="main-number" value={confirmed}></lightning-formatted-number>
+                <div class="sub-text">Confirmed cases</div>
+              </lightning-layout-item>
+              <lightning-layout-item class="sub-container" flexibility="grow" size="6">
+                <lightning-formatted-number class="sub-number green" value={recovered}></lightning-formatted-number>
+                <div class="sub-text">Recovered</div>
+              </lightning-layout-item>
+              <lightning-layout-item class="sub-container" flexibility="grow" size="6">
+                <lightning-formatted-number class="sub-number red" value={deaths}></lightning-formatted-number>
+                <div class="sub-text">Deaths</div>
+              </lightning-layout-item>
+            </lightning-layout>
+          </template>
+        </template>
+      </div>
+    </lightning-card>
+</template>
