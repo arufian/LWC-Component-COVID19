@@ -11,6 +11,10 @@
                 <object>Account</object>
                 <object>Contact</object>
             </objects>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

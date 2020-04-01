@@ -2,7 +2,7 @@
 
 /**
  * This component will retrieve Account's or Contact's country or city name, 
- * retrieve COVID-19 statistics data from API
+ * then retrieve COVID-19 statistics data from API
  * and show the statistics data in Account's or Contact's record page
  *
  * @author arufian
