@@ -40,11 +40,11 @@ After you finish added trusted sites, then you deploy source codes in this repos
 
 If you still don't know how to deploy to your Org, you can learn [from this trailhead](https://trailhead.salesforce.com/en/content/learn/modules/lightning-web-components-basics/push-lightning-web-component-files).
 
-### Having any issues
+## Having any issues
 
 Please [create new issue](https://github.com/arufian/LWC-Component-COVID19/issues/new) to this repository
 
-### Contributing
+## Contributing
 
 Any contribution is welcome. Please see this [guidance](CONTRIBUTION.md) before you create a pull request
 
