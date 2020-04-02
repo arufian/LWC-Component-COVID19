@@ -34,7 +34,7 @@ Since this component using API outside Salesforce, first we must add the API end
 API Endpoint : 
 `https://covid19-data-aru.herokuapp.com`
 
-If you're not sure how to add this, please see step by step setup [here](http://github.com).
+If you're not sure how to add this, please see step by step setup [here](https://help.salesforce.com/articleView?id=csp_trusted_sites.htm&language=en_us&r=https%3A%2F%2Fwww.google.com%2F&type=5).
 
 ### Deploy these source codes to your Salesforce Org
 
