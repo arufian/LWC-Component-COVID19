@@ -1,5 +1,5 @@
 # LWC-Component-COVID19
-A LWC Component that can be embedded into Account or Contact record page, which will show all COVID-19 statistics of Account's country or Contact's country. 
+Salesforce Lightning Web Component that can be embedded into Account or Contact record page, which will show all COVID-19 statistics of Account and Contact respective country. 
 
 Data source: https://github.com/pomber/covid19
 
