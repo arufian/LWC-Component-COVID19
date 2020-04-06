@@ -7,8 +7,12 @@
  *
  * @author arufian
  */
-import { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import ACCOUNT_BILLING_CITY from '@salesforce/schema/Account.BillingCity'
+import ACCOUNT_BILLING_COUNTRY from '@salesforce/schema/Account.BillingCountry'
+import CONTACT_MAILING_CITY from '@salesforce/schema/Contact.MailingCity'
+import CONTACT_MAILING_COUNTRY from '@salesforce/schema/Contact.MailingCountry'
 
 const BASE_URL = 'https://covid19-data-aru.herokuapp.com/';
 
@@ -17,30 +21,30 @@ export default class Covid19 extends LightningElement {
   @api recordId;
   @api objectApiName;
 
-  @track confirmed;
-  @track recovered;
-  @track deaths;
-  @track title = "COVID-19 info";
-  @track fields;
-  @track record;
-  @track isLoading;
-  @track error;
-  @track errorMessage;
+  confirmed;
+  recovered;
+  deaths;
+  title = 'COVID-19 Information';
+  fields;
+  record;
+  isLoading;
+  error;
+  errorMessage;
 
   @wire(getRecord, { recordId: '$recordId', fields: '$fields' })
   load(result) {
-    if(result.data) {
+    if (result.data) {
       this.record = result.data.fields;
       this.fetchApi()
     }
   }
 
   connectedCallback() {
-    if(this.objectApiName === 'Account') {
-      this.fields = ['Account.BillingCity', 'Account.BillingCountry'];
+    if (this.objectApiName === 'Account') {
+      this.fields = [ACCOUNT_BILLING_CITY, ACCOUNT_BILLING_COUNTRY];
       this.errorMessage = `Please check this Account's Billing City or Country, and fill with correct value`;
     } else {
-      this.fields = ['Contact.MailingCity', 'Contact.MailingCountry'];
+      this.fields = [CONTACT_MAILING_CITY, CONTACT_MAILING_COUNTRY];
       this.errorMessage = `Please check this Contact's Mailing City or Country, and fill with correct value`;
     }
     this.isLoading = true;
@@ -50,21 +54,21 @@ export default class Covid19 extends LightningElement {
     const { BillingCity, BillingCountry, MailingCity, MailingCountry } = this.record;
     let param;
     let query = 'country';
-    if(this.objectApiName === 'Account') {
-      if(BillingCountry.value) param = BillingCountry.value;
+    if (this.objectApiName === 'Account') {
+      if (BillingCountry.value) param = BillingCountry.value;
       else {
         param = BillingCity.value;
         query = 'city';
       }
     } else {
-      if(MailingCountry.value) param = MailingCountry.value;
+      if (MailingCountry.value) param = MailingCountry.value;
       else {
         param = MailingCity.value;
         query = 'city';
       }
     }
     this.isLoading = false;
-    if(param === null) {
+    if (param === null) {
       this.error = true;
       return;
     }
@@ -76,9 +80,8 @@ export default class Covid19 extends LightningElement {
       this.confirmed = confirmed;
       this.recovered = recovered;
       this.deaths = deaths;
-      this.title = `${name}'s COVID-19 information ${flag}`;
-    } catch(e) {
-      console.error(e, 'fetch api error')
+      this.title = `${name}'s COVID-19 Information ${flag}`;
+    } catch (e) {
       this.error = true;
       this.errorMessage += ' and try to refresh the page';
     }
