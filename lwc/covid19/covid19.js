@@ -9,6 +9,8 @@
  */
 import { LightningElement, wire, api } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import { loadScript } from "lightning/platformResourceLoader";
+import ChartJS from "@salesforce/resourceUrl/chart";
 import ACCOUNT_BILLING_CITY from '@salesforce/schema/Account.BillingCity'
 import ACCOUNT_BILLING_COUNTRY from '@salesforce/schema/Account.BillingCountry'
 import CONTACT_MAILING_CITY from '@salesforce/schema/Contact.MailingCity'
@@ -31,6 +33,14 @@ export default class Covid19 extends LightningElement {
   error;
   errorMessage;
 
+  chartJSLoaded;
+  chart;
+
+  constructor() {
+    super();
+    this.chartJSLoaded = false;
+  }
+
   @wire(getRecord, { recordId: '$recordId', fields: '$fields' })
   load(result) {
     if (result.data) {
@@ -48,7 +58,56 @@ export default class Covid19 extends LightningElement {
       this.errorMessage = `Please check this Contact's Mailing City or Country, and fill with correct value`;
     }
     this.isLoading = true;
+
+    if (!this.chartJSLoaded) {
+      loadScript(this, ChartJS)
+        .then(() => {
+          this.chartJSLoaded = true;
+        })
+        .catch(error => {
+          console.error(error)
+          this.dispatchEvent(
+            new ShowToastEvent({
+              title: "Error Loading Chart JS",
+              message: error.message,
+              variant: "error"
+            })
+          );
+        });
+    }
   }
+
+_buildChart(apiData) {
+    let canvas = this.template.querySelector("canvas");
+    let context = canvas.getContext("2d");
+    const data = apiData.map((item) => item.confirmed);
+    const date = apiData.map((item) => item.date);
+    if(this.chart) this.chart.reset();
+    this.chart = new window.Chart(context, {
+      type: "bar",
+      data: {
+        labels: date,
+        datasets: [
+          {
+            label: "Confirmed cases",
+            data,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+          }]
+        }
+      }
+    });
+}
 
   async fetchApi() {
     const { BillingCity, BillingCountry, MailingCity, MailingCountry } = this.record;
@@ -81,7 +140,9 @@ export default class Covid19 extends LightningElement {
       this.recovered = recovered;
       this.deaths = deaths;
       this.title = `${name}'s COVID-19 Information ${flag}`;
+      this._buildChart(json.graph);
     } catch (e) {
+      console.error(e);
       this.error = true;
       this.errorMessage += ' and try to refresh the page';
     }

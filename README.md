@@ -9,7 +9,8 @@ API's data will be updated daily.
 
 1) ~~Show latest COVID-19 data of respective country, including case confirmed, recovered and deaths.~~
 2) ~~Mobile support~~
-3) Show graph of 5 recent days data from respective country.
+3) ~Show graph of 5 recent days data from respective country.~
+4) Multiple graph switch for confirmed cases, recovered and deaths.
 
 ## Screenshot
 
@@ -41,6 +42,10 @@ If you're not sure how to add this, please see step by step setup [here](https:/
 After you finish added trusted sites, then you deploy source codes in this repository into your Salesforce Org.
 
 If you still don't know how to deploy to your Org, you can learn [from this trailhead](https://trailhead.salesforce.com/en/content/learn/modules/lightning-web-components-basics/push-lightning-web-component-files).
+
+### Don't forget to add ChartJS as your static resource (for display graph)
+
+Deploy `staticresources` directory into your Org, then ChartJS will loaded and graph will be display.
 
 ## Having any issues
 
