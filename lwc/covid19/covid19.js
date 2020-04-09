@@ -17,6 +17,7 @@ import CONTACT_MAILING_CITY from '@salesforce/schema/Contact.MailingCity'
 import CONTACT_MAILING_COUNTRY from '@salesforce/schema/Contact.MailingCountry'
 
 const BASE_URL = 'https://covid19-data-aru.herokuapp.com/';
+const DEFAULT_TITILE = 'COVID-19 Information';
 
 export default class Covid19 extends LightningElement {
 
@@ -26,19 +27,18 @@ export default class Covid19 extends LightningElement {
   confirmed;
   recovered;
   deaths;
-  title = 'COVID-19 Information';
+  title;
   fields;
   record;
   isLoading;
   error;
   errorMessage;
 
-  chartJSLoaded;
   chart;
 
   constructor() {
     super();
-    this.chartJSLoaded = false;
+    this.title = DEFAULT_TITILE;
   }
 
   @wire(getRecord, { recordId: '$recordId', fields: '$fields' })
@@ -49,7 +49,7 @@ export default class Covid19 extends LightningElement {
     }
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     if (this.objectApiName === 'Account') {
       this.fields = [ACCOUNT_BILLING_CITY, ACCOUNT_BILLING_COUNTRY];
       this.errorMessage = `Please check this Account's Billing City or Country, and fill with correct value`;
@@ -58,26 +58,21 @@ export default class Covid19 extends LightningElement {
       this.errorMessage = `Please check this Contact's Mailing City or Country, and fill with correct value`;
     }
     this.isLoading = true;
-
-    if (!this.chartJSLoaded) {
-      loadScript(this, ChartJS)
-        .then(() => {
-          this.chartJSLoaded = true;
+    try {
+      loadScript(this, ChartJS);
+    } catch (error) {
+      console.error(error)
+      this.dispatchEvent(
+        new ShowToastEvent({
+          title: "Error Loading Chart JS",
+          message: error.message,
+          variant: "error"
         })
-        .catch(error => {
-          console.error(error)
-          this.dispatchEvent(
-            new ShowToastEvent({
-              title: "Error Loading Chart JS",
-              message: error.message,
-              variant: "error"
-            })
-          );
-        });
+      );
     }
   }
 
-_buildChart(apiData) {
+  _buildChart(apiData) {
     let canvas = this.template.querySelector("canvas");
     let context = canvas.getContext("2d");
     const data = apiData.map((item) => item.confirmed);
@@ -107,9 +102,10 @@ _buildChart(apiData) {
         }
       }
     });
-}
+  }
 
   async fetchApi() {
+    this.title = DEFAULT_TITILE;
     const { BillingCity, BillingCountry, MailingCity, MailingCountry } = this.record;
     let param;
     let query = 'country';
@@ -140,7 +136,8 @@ _buildChart(apiData) {
       this.recovered = recovered;
       this.deaths = deaths;
       this.title = `${name}'s COVID-19 Information ${flag}`;
-      this._buildChart(json.graph);
+      this.error = false;
+      setTimeout(() => this._buildChart(json.graph), 400);
     } catch (e) {
       console.error(e);
       this.error = true;

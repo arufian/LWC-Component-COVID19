@@ -21,3 +21,8 @@
 .sub-text {
   font-size: 18px;
 }
+
+.container-header {
+  text-overflow: unset;
+  white-space: normal;
+}
