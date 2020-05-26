@@ -5,6 +5,9 @@ Data source: https://github.com/pomber/covid19
 
 API's data will be updated daily.
 
+## Installation
+Please install to your Salesforce Organization using this [link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2v000006xwWd)
+
 ## Features
 
 1) ~~Show latest COVID-19 data of respective country, including case confirmed, recovered and deaths.~~
@@ -25,27 +28,6 @@ API's data will be updated daily.
 
 ### Data not found 
 ![Data Not Found](/screenshots/notfound.png)
-
-## How to use
-
-### Add API endpoint into Trusted Sites
-
-Since this component using API outside Salesforce, first we must add the API endpoint below into our Salesforce Org CSP Trusted Sites. 
-
-API Endpoint : 
-`https://covid19-data-aru.herokuapp.com`
-
-If you're not sure how to add this, please see step by step setup [here](https://help.salesforce.com/articleView?id=csp_trusted_sites.htm&language=en_us&r=https%3A%2F%2Fwww.google.com%2F&type=5).
-
-### Deploy these source codes to your Salesforce Org
-
-After you finish added trusted sites, then you deploy source codes in this repository into your Salesforce Org.
-
-If you still don't know how to deploy to your Org, you can learn [from this trailhead](https://trailhead.salesforce.com/en/content/learn/modules/lightning-web-components-basics/push-lightning-web-component-files).
-
-### Don't forget to add ChartJS as your static resource (for display graph)
-
-Deploy `staticresources` directory into your Org, then ChartJS will loaded and graph will be display.
 
 ## Having any issues
 
